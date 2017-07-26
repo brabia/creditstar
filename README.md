@@ -19,6 +19,33 @@ Vagrant.configure("2") do |config|
 end
 ```
 
+NGINIX
+-------------
+Nginix file:
+
+```php
+# creditstar.com
+server{
+	listen 80;
+	server_name creditstar.com www.creditstar.com ;
+	root /home/vagrant/creditstar.com/;
+	index index.php index.html index.htm;
+	
+	location / {
+        try_files $uri $uri/ /index.php?$args;
+    }
+	location ~ \.php$ {
+		try_files $uri = 404;
+		fastcgi_split_path_info ^(.+\.php)(/.+)$;
+		fastcgi_pass unix:/var/run/php5-fpm.sock;
+		fastcgi_index index.php;
+		include fastcgi_params;
+		include /etc/nginx/mime.types;
+		fastcgi_read_timeout 200;
+	}
+}
+```
+
 CONFIGURATION
 -------------
 
